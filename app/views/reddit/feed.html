@@ -1,0 +1,19 @@
+<div class="col-xs-6 col-md-8" ng-show="countdown">
+  <p>Select a subreddit on the left, or one will be selected for you after {{countdown}} seconds.</p>
+</div>
+
+<div class="col-xs-6 col-md-8" ng-show="!countdown" id="feed-result">
+  <h2>Recent from "{{ activeFeed }}"</h2>
+  <hr>
+
+  <div ng-repeat="item in redditFeed | orderBy:feedSortOrder | limitTo:15">
+    <h4><a ng-src="{{ item.data.permalink }}">{{ item.data.title }}</a></h4>
+    <p>
+      <strong>Submitted by: {{ item.data.author }} |
+        <span class="label label-success">{{ item.data.score }}<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></span> |
+        <span class="label label-info">Comments: {{ item.data.num_comments }}</span>
+      </strong>
+    </p>
+    <hr>
+  </div>
+</div>

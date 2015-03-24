@@ -1,24 +1,13 @@
+<div class="">
+  <p>This simple demo will automatically pick a subreddit to display if the user does not select an option in 5 seconds. After there is a result, the user can sort the listings.</p>
+  <hr>
+</div>
+
 <div ng-controller="MainCtrl">
   <div>
     {{ error }}
   </div>
 
-  <div class="col-xs-12 col-md-4">
-    <div class="btn-group-vertical" role="group">
-      <button ng-click="fetchFeed(item)" type="button" class="btn btn-default" ng-repeat="item in subreddits">{{ item }}</button>
-    </div>
-  </div>
-
-  <div class="col-xs-6 col-md-8">
-    <div ng-repeat="item in redditFeed">
-      <h4><a ng-src="{{ item.data.permalink }}">{{ item.data.title }}</a></h4>
-      <p>
-        <strong>Submitted by: {{ item.data.author }} |
-          <span class="label label-warning">{{ item.data.score }}<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></span> |
-          <span class="label label-info">Comments: {{ item.data.num_comments }}</span>
-        </strong>
-      </p>
-      <hr>
-    </div>
-  </div>
+  <div ng-include="'views/reddit/nav.html'"></div>
+  <div ng-include="'views/reddit/feed.html'"></div>
 </div>

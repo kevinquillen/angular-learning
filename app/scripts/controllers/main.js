@@ -8,28 +8,62 @@
  * Controller of the learningApp
  */
 angular.module('learningApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function ($scope, $http, $interval, $anchorScroll, $location, reddit) {
     $scope.subreddits = [
       'programming',
       'webdev',
       'angularjs',
-      'php'
+      'php',
+      'swift'
     ];
-
-    var onUserComplete = function(response) {
-      $scope.githubUser = response.data;
-    };
 
     var onError = function(reason) {
       $scope.error = 'There was an error.';
     };
 
-    var onSubredditComplete = function(response) {
-      $scope.redditFeed = response.data.data.children;
+    var onSubredditComplete = function(data) {
+      $scope.redditFeed = data;
     };
 
-    $scope.fetchFeed = function(subreddit) {
-      $http.get('http://www.reddit.com/r/' + subreddit + '.json')
-        .then(onSubredditComplete, onError);
+    var decrementCountdown = function() {
+      if ($scope.countdown > 0) {
+        $scope.countdown -= 1;
+      }
     };
+
+    var startCountdown = function() {
+      $scope.counting = $interval(decrementCountdown, 1000, $scope.countdown).then(onCountdownComplete, onError);
+    };
+
+    var onCountdownComplete = function() {
+      if (!$scope.activeFeed) {
+        reddit.fetchFeed($scope.subreddits[Math.floor(Math.random() * ($scope.subreddits.length - 1))]).then(onSubredditComplete, onError);
+      }
+    };
+
+    // when selected, grab the data from reddit json feeds
+    $scope.fetchFeed = function(subreddit) {
+      // set the active/selected sub
+      $scope.activeFeed = subreddit;
+
+      reddit.fetchFeed(subreddit).then(onSubredditComplete, onError);
+
+      // cancel counting
+      if ($scope.counting) {
+        $interval.cancel(decrementCountdown);
+        $scope.countdown = null;
+      }
+
+      $location.hash('feed-result');
+      $anchorScroll('feed-result');
+    };
+
+
+    // set default sort order based on ranking
+    $scope.feedSortOrder = '-data.score';
+
+    $scope.countdown = 5;
+    $scope.counting = null;
+
+    startCountdown();
   });

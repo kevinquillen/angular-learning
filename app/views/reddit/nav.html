@@ -1,0 +1,15 @@
+<div class="col-xs-12 col-md-4">
+  <div class="btn-group-vertical" role="group">
+    <button ng-click="fetchFeed(item)" type="button" ng-class="{'btn-info': (item == activeFeed)}" class="btn btn-default" ng-repeat="item in subreddits">{{ item }}</button>
+  </div>
+
+  <div ng-show="redditFeed">
+    <p>Sort order:</p>
+    <select ng-model="feedSortOrder">
+      <option value="-data.score">High to low score</option>
+      <option value="+data.score">Low to high score</option>
+      <option value="+data.title">Title (asc)</option>
+      <option value="-data.title">Title (desc)</option>
+    </select>
+  </div>
+</div>
