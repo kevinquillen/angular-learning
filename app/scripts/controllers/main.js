@@ -18,20 +18,18 @@ angular.module('learningApp')
     ];
 
     var onError = function(reason) {
-      $scope.error = 'There was an error.';
+      $scope.error = 'There was an error: ' + reason;
     };
 
     var onSubredditComplete = function(data) {
-      $scope.activeFeed = data.subreddit;
-      $scope.redditFeed = data.items;
+      $scope.redditFeed = data;
     };
-
 
     // when selected, grab the data from reddit json feeds
     $scope.fetchFeed = function(subreddit) {
+      $scope.activeFeed = subreddit;
       reddit.fetchFeed(subreddit).then(onSubredditComplete, onError);
     };
-
 
     // set default sort order based on ranking
     $scope.feedSortOrder = '-data.score';

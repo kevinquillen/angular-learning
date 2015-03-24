@@ -7,7 +7,7 @@
     var fetchFeed = function(subreddit) {
       return $http.get('http://www.reddit.com/r/' + subreddit + '.json')
         .then(function(response) {
-          return { items: response.data.data.children, subreddit: subreddit };
+          return response.data.data.children;
         });
     };
 

@@ -7,7 +7,7 @@
   <hr>
 
   <div ng-repeat="item in redditFeed | orderBy:feedSortOrder | limitTo:15">
-    <h4><a ng-src="{{ item.data.permalink }}">{{ item.data.title }}</a></h4>
+    <h4><a ng-href="http://www.reddit.com{{ item.data.permalink }}" target="_blank">{{ item.data.title }}</a></h4>
     <p>
       <strong>Submitted by: {{ item.data.author }} |
         <span class="label label-success">{{ item.data.score }}<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></span> |
