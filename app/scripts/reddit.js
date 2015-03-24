@@ -7,13 +7,13 @@
     var fetchFeed = function(subreddit) {
       return $http.get('http://www.reddit.com/r/' + subreddit + '.json')
         .then(function(response) {
-          return response.data.data.children;
+          return { items: response.data.data.children, subreddit: subreddit };
         });
     };
 
     return {
       fetchFeed: fetchFeed
-    }
+    };
   };
 
   var module = angular.module('learningApp');
